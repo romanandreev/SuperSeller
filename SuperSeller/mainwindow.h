@@ -10,19 +10,35 @@
 #include <QApplication>
 #include <QMessageBox>
 #include <QComboBox>
+#include <QtWidgets>
+#include "mdichild.h"
+#include "plotchild.h"
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+public:
+    MainWindow();
+    ~MainWindow();
 private slots:
     void about();
     void addPlot();
     void addHistogram();
-public:
-    MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    void setActiveSubWindow(QWidget *window);
+    void updateWindowMenu();
+
 private:
-    QMdiArea *mdiArea;
-    QSignalMapper *windowMapper;
+    MdiChild *activeMdiChild();
+    QMenu *windowMenu;
+    QAction *closeAct;
+    QAction *closeAllAct;
+    QAction *tileAct;
+    QAction *cascadeAct;
+    QAction *nextAct;
+    QAction *previousAct;
+    QAction *separatorAct;
+    QMdiArea *mdiArea;    
+    QSignalMapper *windowMapper;    
 
 };
 

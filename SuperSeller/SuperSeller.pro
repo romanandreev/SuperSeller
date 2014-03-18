@@ -10,9 +10,13 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = SuperSeller
 TEMPLATE = app
-
+CONFIG += c++11
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    plotchild.cpp \
+    mdichild.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    mdichild.h \
+    plotchild.h
