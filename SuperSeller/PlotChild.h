@@ -24,13 +24,14 @@ public:
 
 private:
     QImage img, img2;    
-    vector<int> prices;
+    vector<double> prices;
+    vector<double> trend;
     vector<int> buy;
-    vector<int> profit;
-    int n = 100;
+    vector<double> profit;
+    int n = 1001;
     int start = 1000;
-    double noise_sigma = 1;
-    double tan_mean = 0.2;
+    double noise_sigma = 0;
+    double tan_mean = 0;
     double tan_sigma = 0.3;
 
     double geom_p = 0.05;

@@ -17,24 +17,10 @@ MainWindow::MainWindow()
     addhistogramAction->setShortcut(QKeySequence(tr("Ctrl+H")));
     connect(addhistogramAction, SIGNAL(triggered()), this, SLOT(addhistogram()));
 
-    //-------------------
-    QMenu *helpMenu;
-    QAction *aboutAction;
-    QAction *aboutQtAction;
-
-    aboutAction = new QAction(tr("&About"), this);
-    connect(aboutAction, SIGNAL(triggered()), this, SLOT(about()));
-
-    aboutQtAction = new QAction(tr("About &Qt"), this);
-    connect(aboutQtAction, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
-
     mainMenu = menuBar()->addMenu(tr("&Main"));
     mainMenu->addAction(addPlotAction);
     mainMenu->addAction(addhistogramAction);
 
-    helpMenu = menuBar()->addMenu(tr("&Help"));
-    helpMenu->addAction(aboutAction);
-    helpMenu->addAction(aboutQtAction);
 
     //-------------------    
 
@@ -84,6 +70,21 @@ MainWindow::MainWindow()
     windowMenu = menuBar()->addMenu(tr("&Window"));
     updateWindowMenu();
     connect(windowMenu, SIGNAL(aboutToShow()), this, SLOT(updateWindowMenu()));
+
+    //-------------------
+    QMenu *helpMenu;
+    QAction *aboutAction;
+    QAction *aboutQtAction;
+
+    aboutAction = new QAction(tr("&About"), this);
+    connect(aboutAction, SIGNAL(triggered()), this, SLOT(about()));
+
+    aboutQtAction = new QAction(tr("About &Qt"), this);
+    connect(aboutQtAction, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
+
+    helpMenu = menuBar()->addMenu(tr("&Help"));
+    helpMenu->addAction(aboutAction);
+    helpMenu->addAction(aboutQtAction);
 }
 void MainWindow::updateWindowMenu()
 {
