@@ -1,17 +1,16 @@
-#include "plotchild.h"
+#include "Histchild.h"
 
 
-PlotChild::PlotChild()
+HistChild::HistChild()
 {
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    setMinimumSize(350, 450);
+    setMinimumSize(750, 450);
     static int num = 0;
     num++;
-    setWindowTitle("Plot " + QString::number(num));
+    setWindowTitle("Hist " + QString::number(num));
 
     QWidget *centralW = new QWidget(this);
-    QHBoxLayout *centralL = new QHBoxLayout;
-    QVBoxLayout *left = new QVBoxLayout;
+    QHBoxLayout *centralL = new QHBoxLayout;    
     QVBoxLayout *right = new QVBoxLayout;
     QLabel *text1 = new QLabel("<b>N:</b>");
     str1 = new QLineEdit;
@@ -71,12 +70,22 @@ PlotChild::PlotChild()
 
 
 
-    plotdraw1 = new Plotdraw();
-    plotdraw2 = new Plotdraw();
+    Histdraw1 = new Histdraw();
+    Histdraw2 = new Histdraw();
+    Histdraw3 = new Histdraw();
+    Histdraw4 = new Histdraw();
+    Histdraw5 = new Histdraw();
+    Histdraw6 = new Histdraw();
     pressed();
 
-    left->addWidget(plotdraw1);
-    left->addWidget(plotdraw2);
+    QGridLayout *left = new QGridLayout;
+    left->addWidget(Histdraw1, 0, 0);
+    left->addWidget(Histdraw2, 0, 1);
+    left->addWidget(Histdraw3, 0, 2);
+    left->addWidget(Histdraw4, 1, 0);
+    left->addWidget(Histdraw5, 1, 1);
+    left->addWidget(Histdraw6, 1, 2);
+
 
 
     QWidget* rightW = new QWidget(centralW);
@@ -86,7 +95,7 @@ PlotChild::PlotChild()
     rightW->setMaximumWidth(120);
 
     leftW->setLayout(left);
-    leftW->setMinimumWidth(200);
+    leftW->setMinimumWidth(600);
     centralL->addWidget(leftW);
     centralL->addWidget(rightW);
     centralW->setLayout(centralL);
@@ -97,7 +106,7 @@ PlotChild::PlotChild()
 
 
 }
-void PlotChild::pressed() {
+void HistChild::pressed() {
     o.n = str1->text().toInt();
     o.startm = str2->text().toDouble();
     o.startp = str7->text().toDouble();
@@ -105,25 +114,38 @@ void PlotChild::pressed() {
     o.tan_sigma = str4->text().toDouble();
     o.noise_sigma = str5->text().toDouble();
     o.geom_p = str6->text().toDouble();
-    pair<vector<double>, vector<double> > tmp;
-    tmp = o.gen_prices();
-    prices1 = tmp.first;
-    trend1 = tmp.second;
-    tmp = o.gen_prices();
-    prices2 = tmp.first;
-    trend2 = tmp.second;
+    vector<double> ls1, ls2, ls3, ls4, ls5, ls6;
+    int N = 10;
+    for (int i = 0; i < N; i++) {
+        cerr<<i<<endl;
+        pair<vector<double>, vector<double> > tmp;
+        tmp = o.gen_prices();
+        prices1 = tmp.first;
+        trend1 = tmp.second;
+        tmp = o.gen_prices();
+        prices2 = tmp.first;
+        trend2 = tmp.second;
 
-    pair<int, double> params = o.optimize(prices1);
+        pair<int, double> params = o.optimize(prices1);
 
-    //cerr<<bestlen<<" "<<bestc<<endl;
-    pair<vector<double>, vector<int> > tmp2;
-    tmp2 = o.get_profit(prices1, params);
-    profit1 = tmp2.first;
-    buysell1 = tmp2.second;
-    tmp2 = o.get_profit(prices2, params);
-    profit2 = tmp2.first;
-    buysell2 = tmp2.second;
-    plotdraw1->change(prices1, profit1, trend1, buysell1);
-    plotdraw2->change(prices2, profit2, trend2, buysell2);
+
+        pair<vector<double>, vector<int> > tmp2;
+        tmp2 = o.get_profit(prices1, params);
+        profit1 = tmp2.first;
+        tmp2 = o.get_profit(prices2, params);
+        profit2 = tmp2.first;
+        ls1.push_back(o.profit(profit1));
+        ls2.push_back(o.risk(profit1));
+        ls3.push_back(o.goodness(profit1));
+        ls4.push_back(o.profit(profit2));
+        ls5.push_back(o.risk(profit2));
+        ls6.push_back(o.goodness(profit2));
+    }
+    Histdraw1->change(ls1, "Base profit");
+    Histdraw2->change(ls2, "Base risk");
+    Histdraw3->change(ls3, "Base profit/risk");
+    Histdraw4->change(ls4, "Test profit");
+    Histdraw5->change(ls5, "Test risk");
+    Histdraw6->change(ls6, "Test profit/risk");
 }
 

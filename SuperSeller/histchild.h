@@ -1,5 +1,5 @@
-#ifndef PLOTCHILD_H
-#define PLOTCHILD_H
+#ifndef HistCHILD_H
+#define HistCHILD_H
 
 #include <QWidget>
 #include <QPainter>
@@ -7,7 +7,7 @@
 #include <QColor>
 #include <QMouseEvent>
 #include "mdichild.h"
-#include "plotdraw.h"
+#include "Histdraw.h"
 #include "oracle.h"
 #include <vector>
 #include <random>
@@ -21,11 +21,11 @@ using namespace std;
 
 
 
-class PlotChild : public MdiChild
+class HistChild : public MdiChild
 {
     Q_OBJECT
 public:
-    PlotChild();
+    HistChild();
 private slots:
     void pressed();
 private:    
@@ -35,8 +35,8 @@ private:
     vector<double> trend1, trend2;
     vector<int> buysell1, buysell2;
     QLineEdit * str1, *str2, *str3, *str4, *str5, *str6, *str7;
-    Plotdraw *plotdraw1, *plotdraw2;
+    Histdraw *Histdraw1, *Histdraw2,*Histdraw3, *Histdraw4,*Histdraw5, *Histdraw6;
     Oracle o;
 };
 
-#endif // PLOTCHILD_H
+#endif // HistCHILD_H

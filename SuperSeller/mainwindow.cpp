@@ -15,7 +15,7 @@ MainWindow::MainWindow()
 
     addhistogramAction = new QAction(tr("Add &histogram"), this);
     addhistogramAction->setShortcut(QKeySequence(tr("Ctrl+H")));
-    connect(addhistogramAction, SIGNAL(triggered()), this, SLOT(addhistogram()));
+    connect(addhistogramAction, SIGNAL(triggered()), this, SLOT(addHist()));
 
     mainMenu = menuBar()->addMenu(tr("&Main"));
     mainMenu->addAction(addPlotAction);
@@ -135,9 +135,11 @@ void MainWindow::addPlot()
     child->show();
 }
 
-void MainWindow::addHistogram()
+void MainWindow::addHist()
 {
-
+    MdiChild *child = new HistChild;
+    mdiArea->addSubWindow(child);
+    child->show();
 }
 
 

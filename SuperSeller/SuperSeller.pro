@@ -15,8 +15,16 @@ CONFIG += c++11
 SOURCES += main.cpp\
         mainwindow.cpp \
     plotchild.cpp \
-    mdichild.cpp
+    mdichild.cpp \
+    plotdraw.cpp \
+    oracle.cpp \
+    histdraw.cpp \
+    histchild.cpp
 
 HEADERS  += mainwindow.h \
     mdichild.h \
-    plotchild.h
+    plotchild.h \
+    plotdraw.h \
+    oracle.h \
+    histdraw.h \
+    histchild.h

@@ -13,6 +13,7 @@
 #include <QtWidgets>
 #include "mdichild.h"
 #include "plotchild.h"
+#include "histchild.h"
 
 class MainWindow : public QMainWindow
 {
@@ -23,7 +24,7 @@ public:
 private slots:
     void about();
     void addPlot();
-    void addHistogram();
+    void addHist();
     void setActiveSubWindow(QWidget *window);
     void updateWindowMenu();
 

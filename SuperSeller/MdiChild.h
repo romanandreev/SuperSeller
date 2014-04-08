@@ -1,7 +1,7 @@
 #ifndef MDICHILD_H
 #define MDICHILD_H
-#include<QWidget>
-class MdiChild : public QWidget
+#include<QMainWindow>
+class MdiChild : public QMainWindow
 {
     Q_OBJECT
 
