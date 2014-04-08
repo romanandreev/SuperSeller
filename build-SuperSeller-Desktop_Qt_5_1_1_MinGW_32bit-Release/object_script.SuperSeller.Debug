@@ -1,0 +1,16 @@
+INPUT(
+./debug/main.o
+./debug/mainwindow.o
+./debug/plotchild.o
+./debug/mdichild.o
+./debug/plotdraw.o
+./debug/oracle.o
+./debug/histdraw.o
+./debug/histchild.o
+./debug/moc_mainwindow.o
+./debug/moc_mdichild.o
+./debug/moc_plotchild.o
+./debug/moc_plotdraw.o
+./debug/moc_histdraw.o
+./debug/moc_histchild.o
+);

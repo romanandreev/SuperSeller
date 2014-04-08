@@ -32,6 +32,7 @@ private:
     vector<double> list;
     QString name;
     void myresize();
+    int N = 10;
 protected:
     virtual void paintEvent(QPaintEvent*);
     virtual void resizeEvent(QResizeEvent *);    

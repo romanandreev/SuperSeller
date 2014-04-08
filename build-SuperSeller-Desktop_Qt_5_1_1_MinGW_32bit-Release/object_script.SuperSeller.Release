@@ -1,0 +1,16 @@
+INPUT(
+./release/main.o
+./release/mainwindow.o
+./release/plotchild.o
+./release/mdichild.o
+./release/plotdraw.o
+./release/oracle.o
+./release/histdraw.o
+./release/histchild.o
+./release/moc_mainwindow.o
+./release/moc_mdichild.o
+./release/moc_plotchild.o
+./release/moc_plotdraw.o
+./release/moc_histdraw.o
+./release/moc_histchild.o
+);

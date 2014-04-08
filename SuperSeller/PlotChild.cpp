@@ -49,6 +49,10 @@ PlotChild::PlotChild()
     ss.setNum(o.geom_p);
     str6->setText(ss);
 
+    text8 = new QLabel("<b>Best len = ?</b>");
+    text9 = new QLabel("<b>Best c = ?</b>");
+
+
     QPushButton *button = new QPushButton;
     button->setText("Construct");
     //button->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Minimum);
@@ -66,6 +70,8 @@ PlotChild::PlotChild()
     right->addWidget(str5);
     right->addWidget(text6);
     right->addWidget(str6);
+    right->addWidget(text8);
+    right->addWidget(text9);
     right->addStretch(1);
     right->addWidget(button);
 
@@ -115,7 +121,10 @@ void PlotChild::pressed() {
 
     pair<int, double> params = o.optimize(prices1);
 
-    //cerr<<bestlen<<" "<<bestc<<endl;
+    //cerr<<params.first<<" "<<params.second<<endl;
+    text8->setText("<b>Best len = </b>" + QString::number(params.first));
+    text9->setText("<b>Best c = </b>" + QString::number(params.second));
+
     pair<vector<double>, vector<int> > tmp2;
     tmp2 = o.get_profit(prices1, params);
     profit1 = tmp2.first;

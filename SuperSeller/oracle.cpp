@@ -128,7 +128,7 @@ pair<int, double> Oracle::optimize(vector<double>& prices) {
     double bestc = 0;
     double bestgood = 0;
     for (int len = 2; len <= n / 10; len++) {
-        for (double c = 0; c <= 3; c += 0.02) {
+        for (double c = 0; c <= 3; c += 0.2) {
             double curgood = goodness(get_profit(prices, make_pair(len, c)).first);
             if (curgood > bestgood) {
                 bestgood = curgood;

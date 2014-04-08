@@ -24,42 +24,45 @@ void Histdraw::myresize() {
     //painter.setRenderHint(QPainter::Antialiasing);
     QPen Pen((QColor(0,0,0)),1);
     painter.setPen(Pen);
-    painter.drawLine(0, 0, w, h);
-
-    /*painter.drawLine(s, h - s, w - s, h - s);
-    QPolygonF arrowHead;
-    painter.setBrush(Qt::black);    
-    painter.drawLine(s, 0, s, h - s);
-    arrowHead.clear();
-    arrowHead << QPointF(s, 0)
-              << QPointF(s - s / 4, s / 2)
-              << QPointF(s + s / 4, s / 2);
-    painter.drawPolygon(arrowHead);
-    painter.drawLine(s, s, s, h - s);
-
-    painter.drawLine(w - s, 0, w - s, h - s);
-    arrowHead.clear();
-    arrowHead << QPointF(w - s, 0)
-              << QPointF(w - s - s / 4, s / 2)
-              << QPointF(w - s + s / 4, s / 2);
-    painter.drawPolygon(arrowHead);
-
-
-
-    vector<double> x;
-    int shift = n;
-    for (int i = 0; i <= n; i++) {
-        x.push_back(s + (w - 2 * s) * i / n);
+    //painter.drawLine(0, 0, w, h);
+    sort(list.begin(), list.end());
+    double mnx = floor(list[0]);
+    double mxx = ceil(list[list.size() - 1]);
+    if (fabs(mxx - mnx) <= 1e-9) {
+        mnx--;
+        mxx++;
     }
-    for (int i = 0; i <= n; i += 5) {
-        if (x[i] - x[0] >= s) {
+    vector<double> x, rx;
+    vector<int> count;
+    for (int i = 0; i <= N; i++) {
+        rx.push_back(mnx + (mxx - mnx) / N * i);
+        x.push_back(s + (w - 2 * s) * i / N);
+    }
+    int yk = 0;
+    for (int i = 0; i < N; i++) {
+        double r = rx[i + 1];
+        int cnt = yk;
+        while (yk < list.size() && list[yk] <= r) {
+            yk++;
+        }
+        cnt = yk - cnt;
+        count.push_back(cnt);
+    }
+    int mxcount = *max_element(count.begin(), count.end());
+    painter.drawLine(s, h - s, w - s, h - s);
+
+    int shift = N;
+
+    for (int i = 0; i <= N; i++) {
+        if (x[i] - x[0] >= s / 2) {
             shift = i;
             break;
         }
     }
-    for (int i = 0; i <= n; i += shift) {
+
+    for (int i = 0; i <= N; i += shift) {
         painter.drawLine(x[i], h - s, x[i], h - (s - s / 4));
-        painter.drawText(x[i], h - (s * 1 / 4), QString::number(i));
+        painter.drawText(x[i], h - (s * 1 / 4), QString::number(rx[i]));
     }
 
     int cy = 0;
@@ -70,87 +73,33 @@ void Histdraw::myresize() {
             break;
         }
     }
-
-    double mny = floor(*min_element(val2.begin(), val2.end()));
-    double mxy = ceil(*max_element(val2.begin(), val2.end()));
-    if (fabs(mxy - mny) <= 1e-9) {
-        mny--;
-        mxy++;
+    int dy = ceil(mxcount / cy);
+    for (int i = 0; i <= mxcount; i += dy) {
+        painter.drawLine(s, h - (s + (double)(h - 2 * s) * i / mxcount), 0, h - (s + (double)(h - 2 * s) * i / mxcount));
+        painter.drawText(2, h - (s + (double)(h - 2 * s) * i / mxcount) - 1,
+                         QString::number(i));
     }
 
+    painter.setBrush(Qt::blue);
 
-    for (int i = 0; i <= cy; i++) {
-        painter.drawLine(w - s, h - (s + (double)(h - 2 * s) * i / cy), w, h - (s + (double)(h - 2 * s) * i / cy));
-        painter.drawText(w - s + 2, h - (s + (double)(h - 2 * s) * i / cy) - 1,
-                         QString::number((mny + (mxy - mny) * ((double)i / cy)), 'g', 5));
+    for (int i = 0; i < N; i++) {
+        double dh = (double)(h - 2 * s) / mxcount * count[i];
+        painter.drawRect(x[i], h - s - dh, x[i + 1] - x[i], dh);
+    }    
+
+    painter.drawText(w / 2 - s, s / 4, name);
+    double mean = 0;
+    double s2 = 0;
+    //cerr<<"("<<mnx<<" "<<mxx<<")"<<endl;
+    for (int i = 0; i < list.size(); i++) {
+        mean += list[i];
+      //  cerr<<list[i]<<" ";
+        s2 += list[i] * list[i];
     }
-
-    Pen.setColor(QColor(255, 0, 0));
-    Pen.setWidth(2);
-    painter.setPen(Pen);
-
-    for (int i = 0; i < n; i++) {
-        painter.drawLine(x[i], h - ((val2[i] - mny) * (h - 2 * s) / (mxy - mny) + s),
-                         x[i + 1], h - ((val2[i + 1] - mny) * (h - 2 * s) / (mxy - mny) + s));
-    }
-
-
-    Pen.setColor(QColor(0, 0, 0));
-    Pen.setWidth(1);
-    painter.setPen(Pen);
-
-    mny = floor(*min_element(val1.begin(), val1.end()));
-    mxy = ceil(*max_element(val1.begin(), val1.end()));
-    mny = min(mny, floor(*min_element(val3.begin(), val3.end())));
-    mxy = max(mxy, ceil(*max_element(val3.begin(), val3.end())));
-
-    if (fabs(mxy - mny) <= 1e-9) {
-        mny--;
-        mxy++;
-    }
-
-
-
-    for (int i = 0; i <= cy; i++) {
-        painter.drawLine(s, h - (s + (double)(h - 2 * s) * i / cy), 0, h - (s + (double)(h - 2 * s) * i / cy));
-        painter.drawText(2, h - (s + (double)(h - 2 * s) * i / cy) - 1,
-                         QString::number((mny + (mxy - mny) * ((double)i / cy)), 'g', 5));
-    }
-
-    Pen.setColor(QColor(0, 0, 255));
-    Pen.setWidth(2);
-    painter.setPen(Pen);
-
-    for (int i = 0; i < n; i++) {
-        painter.drawLine(x[i], h - ((val1[i] - mny) * (h - 2 * s) / (mxy - mny) + s),
-                         x[i + 1], h - ((val1[i + 1] - mny) * (h - 2 * s) / (mxy - mny) + s));
-    }
-
-    Pen.setColor(QColor(0, 255, 0));
-    Pen.setWidth(2);
-    painter.setPen(Pen);
-
-    for (int i = 0; i < n; i++) {
-        painter.drawLine(x[i], h - ((val3[i] - mny) * (h - 2 * s) / (mxy - mny) + s),
-                         x[i + 1], h - ((val3[i + 1] - mny) * (h - 2 * s) / (mxy - mny) + s));
-    }
-
-    for (int i = 0; i <= n; i++) {
-        if (abs(events[i]) == 1) {
-            Pen.setColor(QColor(0, 0, 0));
-            Pen.setWidth(1);
-            painter.setPen(Pen);
-            if (events[i] > 0)
-                painter.setBrush(QColor(255, 0, 255));
-            else
-                painter.setBrush(QColor(255, 255, 0));
-            double R = 7;
-            painter.drawEllipse(x[i] - R / 2, h - ((val3[i] - mny) * (h - 2 * s) / (mxy - mny) + s + R / 2),
-                             R, R);
-        }
-    }*/
-
-
+    //cerr<<endl;
+    mean = mean / list.size();
+    s2 = s2 / list.size() - mean * mean;
+    painter.drawText(w / 2 - 2 * s, s / 2, "Mean = " + QString::number(mean, 'g', 3) + ", S.E. = " + QString::number(sqrt(s2 / list.size()), 'g', 3));
     img2 = img;
 }
 

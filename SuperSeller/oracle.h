@@ -11,7 +11,7 @@ class Oracle
 {
 public:
     Oracle();
-    int n = 1000;
+    int n = 100;
     double startm = 200;
     double startp = 1000;
     double noise_sigma = 10;

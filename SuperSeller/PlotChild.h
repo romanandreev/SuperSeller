@@ -35,6 +35,7 @@ private:
     vector<double> trend1, trend2;
     vector<int> buysell1, buysell2;
     QLineEdit * str1, *str2, *str3, *str4, *str5, *str6, *str7;
+    QLabel* text8, *text9;
     Plotdraw *plotdraw1, *plotdraw2;
     Oracle o;
 };

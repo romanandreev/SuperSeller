@@ -115,7 +115,7 @@ void HistChild::pressed() {
     o.noise_sigma = str5->text().toDouble();
     o.geom_p = str6->text().toDouble();
     vector<double> ls1, ls2, ls3, ls4, ls5, ls6;
-    int N = 10;
+    int N = 1000;
     for (int i = 0; i < N; i++) {
         cerr<<i<<endl;
         pair<vector<double>, vector<double> > tmp;
