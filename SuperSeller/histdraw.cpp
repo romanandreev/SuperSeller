@@ -42,7 +42,7 @@ void Histdraw::myresize() {
     for (int i = 0; i < N; i++) {
         double r = rx[i + 1];
         int cnt = yk;
-        while (yk < list.size() && list[yk] <= r) {
+        while (yk < (int)list.size() && list[yk] <= r) {
             yk++;
         }
         cnt = yk - cnt;
@@ -50,11 +50,12 @@ void Histdraw::myresize() {
     }
     int mxcount = *max_element(count.begin(), count.end());
     painter.drawLine(s, h - s, w - s, h - s);
+    painter.drawLine(s, h - s, s, s);
 
     int shift = N;
 
     for (int i = 0; i <= N; i++) {
-        if (x[i] - x[0] >= s / 2) {
+        if (x[i] - x[0] >= s * 3 / 4) {
             shift = i;
             break;
         }
@@ -91,7 +92,7 @@ void Histdraw::myresize() {
     double mean = 0;
     double s2 = 0;
     //cerr<<"("<<mnx<<" "<<mxx<<")"<<endl;
-    for (int i = 0; i < list.size(); i++) {
+    for (int i = 0; i < (int)list.size(); i++) {
         mean += list[i];
       //  cerr<<list[i]<<" ";
         s2 += list[i] * list[i];
