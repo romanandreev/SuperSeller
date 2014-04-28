@@ -16,6 +16,7 @@
 #include <QHBoxLayout>
 #include <QLineEdit>
 #include <QPushButton>
+#include <QProgressDialog>
 
 using namespace std;
 

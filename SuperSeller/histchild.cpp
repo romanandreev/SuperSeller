@@ -116,8 +116,10 @@ void HistChild::pressed() {
     o.geom_p = str6->text().toDouble();
     vector<double> ls1, ls2, ls3, ls4, ls5, ls6;
     int N = 1000;
-    for (int i = 0; i < N; i++) {
-        cerr<<i<<endl;
+    QProgressDialog* pd = new QProgressDialog("Operation in progress.", "Cancel", 0, N);
+    pd->setWindowModality(Qt::WindowModal);
+    pd->show();
+    for (int i = 0; i < N; i++) {        
         pair<vector<double>, vector<double> > tmp;
         tmp = o.gen_prices();
         prices1 = tmp.first;
@@ -140,6 +142,9 @@ void HistChild::pressed() {
         ls4.push_back(o.profit(profit2));
         ls5.push_back(o.risk(profit2));
         ls6.push_back(o.goodness(profit2));
+        pd->setValue(i + 1);
+        if (pd->wasCanceled())
+            break;
     }
     Histdraw1->change(ls1, "Base profit");
     Histdraw2->change(ls2, "Base risk");
