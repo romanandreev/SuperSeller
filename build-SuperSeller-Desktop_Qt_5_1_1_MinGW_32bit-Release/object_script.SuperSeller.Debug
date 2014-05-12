@@ -7,6 +7,7 @@ INPUT(
 ./debug/oracle.o
 ./debug/histdraw.o
 ./debug/histchild.o
+./debug/gen.o
 ./debug/moc_mainwindow.o
 ./debug/moc_mdichild.o
 ./debug/moc_plotchild.o

@@ -9,6 +9,7 @@
 #include "mdichild.h"
 #include "plotdraw.h"
 #include "oracle.h"
+#include "gen.h"
 #include <vector>
 #include <random>
 #include <assert.h>
@@ -37,7 +38,8 @@ private:
     QLineEdit * str1, *str2, *str3, *str4, *str5, *str6, *str7;
     QLabel* text8, *text9;
     Plotdraw *plotdraw1, *plotdraw2;
-    Oracle o;
+    Gen gen;
+    Oracle orac;
 };
 
 #endif // PLOTCHILD_H

@@ -16,37 +16,37 @@ PlotChild::PlotChild()
     QLabel *text1 = new QLabel("<b>N:</b>");
     str1 = new QLineEdit;
     QString ss;
-    ss.setNum(o.n);
+    ss.setNum(gen.n);
     str1->setText(ss);
 
     QLabel *text2 = new QLabel("<b>Start money:</b>");
     str2 = new QLineEdit;
-    ss.setNum(o.startm);
+    ss.setNum(orac.startm);
     str2->setText(ss);
 
     QLabel *text7 = new QLabel("<b>Start price <br>(buying on 100$):</b>");
     str7 = new QLineEdit;
-    ss.setNum(o.startp);
+    ss.setNum(gen.startp);
     str7->setText(ss);
 
     QLabel *text3 = new QLabel("<b>Mean of tangent:</b>");
     str3 = new QLineEdit;
-    ss.setNum(o.tan_mean);
+    ss.setNum(gen.tan_mean);
     str3->setText(ss);
 
     QLabel *text4 = new QLabel("<b>S.D. of tangent:</b>");
     str4 = new QLineEdit;
-    ss.setNum(o.tan_sigma);
+    ss.setNum(gen.tan_sigma);
     str4->setText(ss);
 
     QLabel *text5 = new QLabel("<b>S.D. of noise:</b>");
     str5 = new QLineEdit;
-    ss.setNum(o.noise_sigma);
+    ss.setNum(gen.noise_sigma);
     str5->setText(ss);
 
     QLabel *text6 = new QLabel("<b>Geometric p:</b>");
     str6 = new QLineEdit;
-    ss.setNum(o.geom_p);
+    ss.setNum(gen.geom_p);
     str6->setText(ss);
 
     text8 = new QLabel("<b>Best len = ?</b>");
@@ -104,32 +104,33 @@ PlotChild::PlotChild()
 
 }
 void PlotChild::pressed() {
-    o.n = str1->text().toInt();
-    o.startm = str2->text().toDouble();
-    o.startp = str7->text().toDouble();
-    o.tan_mean = str3->text().toDouble();
-    o.tan_sigma = str4->text().toDouble();
-    o.noise_sigma = str5->text().toDouble();
-    o.geom_p = str6->text().toDouble();
+    gen.n = str1->text().toInt();
+    orac.startm = str2->text().toDouble();
+    gen.startp = str7->text().toDouble();
+    gen.tan_mean = str3->text().toDouble();
+    gen.tan_sigma = str4->text().toDouble();
+    gen.noise_sigma = str5->text().toDouble();
+    gen.geom_p = str6->text().toDouble();
     pair<vector<double>, vector<double> > tmp;
-    tmp = o.gen_prices();
+    tmp = gen.gen_prices();
     prices1 = tmp.first;
     trend1 = tmp.second;
-    tmp = o.gen_prices();
+    tmp = gen.gen_prices();
     prices2 = tmp.first;
     trend2 = tmp.second;
-
-    pair<int, double> params = o.optimize(prices1);
+    orac.prices = prices1;
+    orac.optimize();
 
     //cerr<<params.first<<" "<<params.second<<endl;
-    text8->setText("<b>Best len = </b>" + QString::number(params.first));
-    text9->setText("<b>Best c = </b>" + QString::number(params.second));
+    text8->setText("<b>Best len = </b>" + QString::number(orac.params.first));
+    text9->setText("<b>Best c = </b>" + QString::number(orac.params.second));
 
     pair<vector<double>, vector<int> > tmp2;
-    tmp2 = o.get_profit(prices1, params);
+    tmp2 = orac.get_profit();
     profit1 = tmp2.first;
     buysell1 = tmp2.second;
-    tmp2 = o.get_profit(prices2, params);
+    orac.prices = prices2;
+    tmp2 = orac.get_profit();
     profit2 = tmp2.first;
     buysell2 = tmp2.second;
     plotdraw1->change(prices1, profit1, trend1, buysell1);

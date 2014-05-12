@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     plotdraw.cpp \
     oracle.cpp \
     histdraw.cpp \
-    histchild.cpp
+    histchild.cpp \
+    gen.cpp
 
 HEADERS  += mainwindow.h \
     mdichild.h \
@@ -27,4 +28,5 @@ HEADERS  += mainwindow.h \
     plotdraw.h \
     oracle.h \
     histdraw.h \
-    histchild.h
+    histchild.h \
+    gen.h

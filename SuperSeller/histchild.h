@@ -9,6 +9,8 @@
 #include "mdichild.h"
 #include "Histdraw.h"
 #include "oracle.h"
+#include "gen.h"
+
 #include <vector>
 #include <random>
 #include <assert.h>
@@ -36,8 +38,9 @@ private:
     vector<double> trend1, trend2;
     vector<int> buysell1, buysell2;
     QLineEdit * str1, *str2, *str3, *str4, *str5, *str6, *str7;
-    Histdraw *Histdraw1, *Histdraw2,*Histdraw3, *Histdraw4,*Histdraw5, *Histdraw6;
-    Oracle o;
+    Histdraw *Histdraw1, *Histdraw2,*Histdraw3, *Histdraw4,*Histdraw5, *Histdraw6;    
+    Gen gen;
+    Oracle orac;
 };
 
 #endif // HistCHILD_H

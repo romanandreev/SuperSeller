@@ -29,8 +29,10 @@ public:
 
 private:
     QImage img, img2;    
-    vector<double> val1, val2, val3;
-    vector<int> events;
+    vector<double> val1; //price, blue
+    vector<double> val2; //profit, red
+    vector<double> val3; //trend, green
+    vector<int> events; //buysell
     int n;
     void myresize();
 protected:

@@ -7,6 +7,7 @@ INPUT(
 ./release/oracle.o
 ./release/histdraw.o
 ./release/histchild.o
+./release/gen.o
 ./release/moc_mainwindow.o
 ./release/moc_mdichild.o
 ./release/moc_plotchild.o
